@@ -26,6 +26,8 @@ import org.jlab.jnp.hipo4.data.Bank;
         H1F hPi0 = new H1F("hPi0", 100, 0, 0.75);
         H1F hOmega = new H1F("hOmega", 100, 0, 2.0);
         H1F hOmegaCut = new H1F("hOmegaCut", 100, 0, 2.0);
+        H1F hTheta_eg1 = new H1F("hTheta_eg1", 100, 0, 60);
+        H2F hThetaVhPi0 = new H2F("hThetaVhPi0", 100, 0, 0.75, 100, 0, 60);
         {
             hW.setTitleX("W [GeV]");
         }
@@ -41,6 +43,10 @@ import org.jlab.jnp.hipo4.data.Bank;
         {
             hOmegaCut.setTitleX("Omega Mass Cut");
         }
+        {
+        hThetaVhPi0.setTitleX("Mass");
+        hThetaVhPi0.setTitleY("Theta");
+    }
     }
 
         TCanvas ec = new TCanvas("ec",800,400);
@@ -138,18 +144,28 @@ import org.jlab.jnp.hipo4.data.Bank;
             hOmega.fill(vOmega.mass());
             if(vPi0.mass() > .05 && vPi0.mass() < .2){
                 hOmegaCut.fill(vOmega.mass());
-            }
-            }
-            }
+           double theta_eg1 = electron.angle(gamma);
+        
+        {
+        double theta_eg1 = electron.angle(gamma);
+        hTheta_eg1.fill(theta_eg1);
+        }
+        {
+            hThetaVhPi0.fill(vPi0.mass(), theta_eg1);
+        }
+        }
+        }
 
-            }
-            }
-            }
-            {
-            {ec.divide(5,1);}
-            {ec.cd(0).draw(hW);}
-            {ec.cd(1).draw(hQ2);}
-            {ec.cd(2).draw(hPi0);}
-            {ec.cd(3).draw(hOmega);}
-            {ec.cd(4).draw(hOmegaCut);}
-            }
+        }
+        }
+        }
+        {
+        {ec.divide(3,3);}
+        {ec.cd(0).draw(hW);}
+        {ec.cd(1).draw(hQ2);}
+        {ec.cd(2).draw(hPi0);}
+        {ec.cd(3).draw(hOmega);}
+        {ec.cd(4).draw(hOmegaCut);}
+        {ec.cd(5).draw(hTheta_eg1);}
+        {ec.cd(6).draw(hThetaVhPi0);}
+}
